@@ -27,8 +27,8 @@ typedef NS_ENUM(NSInteger, ScrollViewInsetsAdjustStyle) {
 
 @interface UIViewController (KeyboardScroll)
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIView *contentView;
+@property (nonatomic, strong) UIScrollView *keyboardScrollView;
+@property (nonatomic, strong) UIView *keyboardContentView;
 
 - (void) setupKeyboardAutoScrollable;
 
