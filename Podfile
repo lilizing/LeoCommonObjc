@@ -10,8 +10,9 @@ abstract_target 'Leo' do
   # Uncomment this line if you're using Swift or would like to use dynamic frameworks
   use_frameworks!
 
+  pod 'ReactiveCocoa',      '2.4.7'
+  pod 'Masonry',            '1.0.2'
   
-
   target 'LeoCommonObjc'
 end
 

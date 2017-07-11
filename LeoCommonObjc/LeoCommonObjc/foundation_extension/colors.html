@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>颜色工具</title>
+		<script src="http://cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<textarea id="color_values" style="resize:none; width:600px; height:200px;"></textarea>
+		</div>
+		<button id="show" style="resize:none; width:600px; height:40px; background-color: #2189c8; color:white;">显示颜色</button>
+		<div style="resize:none; width:100px; height:50px;"></div>
+		<table id="color_shows" border="1px">
+		</table>
+	</body>
+	<script>
+		
+		$("#show").click(function(){
+			$("#color_shows").empty();
+			$("#color_shows").append('<tr><th>方法名</th><th>颜色值</th><th>透明度</th></tr>');
+		  	var values = $("#color_values").val();
+		  	var newVals = values.replace(/\n/g, '').replace(/\s/g, '');
+
+			var colorStrs = newVals.match(/snail\d+[^+]*}/g);
+
+			for (var i = 0; i < colorStrs.length; i++) {
+				var colorTemp = colorStrs[i];
+
+				console.log(colorTemp);
+
+				var names = colorTemp.match(/snail\d+/);
+				var hexs = colorTemp.match(/#\w{6,8}/);
+				var alphas = colorTemp.match(/alpha:(\d+\.?\d*)/);
+				if(alphas) {
+					alphas = alphas[0].match(/\d+\.?\d*/);
+				}
+
+				// console.log(names[0], hexs[0], alphas ? alphas[0] : '');
+				var name = names ? names[0] : '';
+				var hex = hexs ? hexs[0] : '';
+				var alpha = alphas ? alphas[0] : '';
+				if(hex) {
+					if(hex.length > 7) {
+						alpha = parseInt(hex.substr(1, 2), 16) / 255.0;
+						hex = hex.substr(3, 6);
+					}else{
+						hex = hex.substr(1, 6);
+					}
+					hex = "#" + hex;
+					$("#color_shows").append('<tr><th>' + name + '</th><th style="background-color: ' + hex + ';">' + hex + '</th><th>' + alpha + '</th></tr>');
+				}
+			}
+		});
+	</script>
+</html>

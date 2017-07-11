@@ -133,8 +133,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # s.dependency "BLNetworking"
-  # s.dependency "BLAPIManagers"
-  # s.dependency "BLMediator"
+
+  s.dependency "ReactiveCocoa", '2.4.7'
+  s.dependency "Masonry", '1.0.2'
 
 end
