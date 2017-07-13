@@ -8,4 +8,6 @@
 
 - (NSDictionary *)reverseKeyValueDictionary;
 
++ (NSString*)toString:(NSDictionary *)infoDict;
+
 @end
