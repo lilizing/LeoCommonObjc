@@ -74,7 +74,7 @@
 		222A4A981F00FF5C001DDDC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		222A4A9A1F00FF5C001DDDC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2246F5DC1F14845A00DF26B5 /* pod.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pod.podspec; sourceTree = SOURCE_ROOT; };
-		2246F5DD1F14845A00DF26B5 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		2246F5DD1F14845A00DF26B5 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2246F70B1F14CFBB00DF26B5 /* colors.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = colors.html; sourceTree = "<group>"; };
 		2246F70C1F14CFBB00DF26B5 /* NSArray+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Ext.h"; sourceTree = "<group>"; };
 		2246F70D1F14CFBB00DF26B5 /* NSArray+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Ext.m"; sourceTree = "<group>"; };
