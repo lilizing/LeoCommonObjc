@@ -1,3 +1,11 @@
+//
+//  NSAttributedString+Ext.m
+//
+//
+//  Created by by on 4/20/15.
+//  Copyright (c) 2015 李理. All rights reserved.
+//
+
 #import "NSAttributedString+Ext.h"
 #import "NSMutableAttributedString+Ext.h"
 

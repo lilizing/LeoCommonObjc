@@ -90,6 +90,10 @@
     return (string != nil && [string isKindOfClass:[NSString class]] && string.length > 0);
 }
 
++(BOOL)isEmptyString:(NSString *)string {
+    return ![NSString isNotEmptyString:string];
+}
+
 - (NSDictionary *) queryStringDict {
     return [self queryStringDictDecode:NO];
 }

@@ -1,9 +1,21 @@
+//
+//  NSArray+Ext.m
+//
+//
+//  Created by by on 3/13/15.
+//  Copyright (c) 2015 bolome. All rights reserved.
+//
+
 #import "NSArray+Ext.h"
 
 @implementation NSArray(Ext)
 
 + (BOOL)isNotEmptyArray:(id)array {
     return (array != nil && [array isKindOfClass:[NSArray class]] && [array count] > 0);
+}
+
++ (BOOL)isEmptyArray:(id)array {
+    return ![NSArray isNotEmptyArray:array];
 }
 
 - (BOOL) isEqualToArray:(NSArray *)otherArray

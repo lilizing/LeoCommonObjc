@@ -29,6 +29,7 @@
 - (NSDictionary *) queryStringDictDecode:(BOOL)decode;
 
 + (BOOL) isNotEmptyString:(NSString *)string;
++ (BOOL) isEmptyString:(NSString *)string;
 
 + (NSString *) jsonStringWithObject:(id)object;
 + (NSString *) jsonStringWithObject:(id)object

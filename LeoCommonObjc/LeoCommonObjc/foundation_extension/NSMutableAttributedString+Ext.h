@@ -1,3 +1,11 @@
+//
+//  NSMutableAttributedString+Ext.h
+//
+//
+//  Created by by on 3/20/15.
+//  Copyright (c) 2015 bolome. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 

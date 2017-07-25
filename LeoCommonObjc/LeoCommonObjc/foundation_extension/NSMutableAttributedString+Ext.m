@@ -1,3 +1,11 @@
+//
+//  NSMutableAttributedString+Ext.m
+//
+//
+//  Created by by on 3/20/15.
+//  Copyright (c) 2015 bolome. All rights reserved.
+//
+
 #import "NSMutableAttributedString+Ext.h"
 #import <CoreText/CoreText.h>
 
