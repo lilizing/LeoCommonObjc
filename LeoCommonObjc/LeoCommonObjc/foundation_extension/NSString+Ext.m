@@ -1,6 +1,6 @@
 #import "NSString+Ext.h"
 #import "NSMutableString+Ext.h"
-#import <CommonCrypto/CommonDigest.h>
+//#import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString(Ext)
 
@@ -34,24 +34,24 @@
     return result;
 }
 
-- (NSString *)md5{
-    const char *zcSrc = [self UTF8String];
-    
-    unsigned char zcDes[16];
-    CC_MD5( zcSrc, (CC_LONG)strlen(zcSrc), zcDes );
-    
-    return [NSString stringWithFormat:
-            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            zcDes[0], zcDes[1], zcDes[2], zcDes[3],
-            zcDes[4], zcDes[5], zcDes[6], zcDes[7],
-            zcDes[8], zcDes[9], zcDes[10], zcDes[11],
-            zcDes[12], zcDes[13], zcDes[14], zcDes[15]
-            ];
-}
-
--(NSString *) md5_16{
-    return [[self md5] substringWithRange:NSMakeRange(8, 16)];
-}
+//- (NSString *)md5{
+//    const char *zcSrc = [self UTF8String];
+//    
+//    unsigned char zcDes[16];
+//    CC_MD5( zcSrc, (CC_LONG)strlen(zcSrc), zcDes );
+//    
+//    return [NSString stringWithFormat:
+//            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+//            zcDes[0], zcDes[1], zcDes[2], zcDes[3],
+//            zcDes[4], zcDes[5], zcDes[6], zcDes[7],
+//            zcDes[8], zcDes[9], zcDes[10], zcDes[11],
+//            zcDes[12], zcDes[13], zcDes[14], zcDes[15]
+//            ];
+//}
+//
+//-(NSString *) md5_16{
+//    return [[self md5] substringWithRange:NSMakeRange(8, 16)];
+//}
 
 - (NSString *)urlEncodeUsingEncoding:(NSStringEncoding)encoding {
     return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(

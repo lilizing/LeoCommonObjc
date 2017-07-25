@@ -14,8 +14,8 @@
 
 - (unsigned)hexInteger;
 
-- (NSString *)md5;
-- (NSString *)md5_16;
+//- (NSString *)md5;
+//- (NSString *)md5_16;
 
 - (NSString *)urlEncodeUsingEncoding:(NSStringEncoding)encoding;
 - (NSString *)urlDecodeUsingEncoding:(NSStringEncoding)encoding;

@@ -29,7 +29,7 @@
 		2246F7711F14CFBB00DF26B5 /* NSMutableString+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F7211F14CFBB00DF26B5 /* NSMutableString+Ext.m */; };
 		2246F7721F14CFBB00DF26B5 /* NSObject+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F7231F14CFBB00DF26B5 /* NSObject+Ext.m */; };
 		2246F7731F14CFBB00DF26B5 /* NSRegularExpression+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F7251F14CFBB00DF26B5 /* NSRegularExpression+Ext.m */; };
-		2246F7741F14CFBB00DF26B5 /* NSString+Ext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2246F7271F14CFBB00DF26B5 /* NSString+Ext.mm */; };
+		2246F7741F14CFBB00DF26B5 /* NSString+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F7271F14CFBB00DF26B5 /* NSString+Ext.m */; };
 		2246F7751F14CFBB00DF26B5 /* NSThread+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F7291F14CFBB00DF26B5 /* NSThread+Ext.m */; };
 		2246F7761F14CFBB00DF26B5 /* NSURL+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F72B1F14CFBB00DF26B5 /* NSURL+Ext.m */; };
 		2246F7771F14CFBB00DF26B5 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2246F72D1F14CFBB00DF26B5 /* UIButton+EnlargeEdge.m */; };
@@ -105,7 +105,7 @@
 		2246F7241F14CFBB00DF26B5 /* NSRegularExpression+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSRegularExpression+Ext.h"; sourceTree = "<group>"; };
 		2246F7251F14CFBB00DF26B5 /* NSRegularExpression+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSRegularExpression+Ext.m"; sourceTree = "<group>"; };
 		2246F7261F14CFBB00DF26B5 /* NSString+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Ext.h"; sourceTree = "<group>"; };
-		2246F7271F14CFBB00DF26B5 /* NSString+Ext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+Ext.mm"; sourceTree = "<group>"; };
+		2246F7271F14CFBB00DF26B5 /* NSString+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Ext.m"; sourceTree = "<group>"; };
 		2246F7281F14CFBB00DF26B5 /* NSThread+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+Ext.h"; sourceTree = "<group>"; };
 		2246F7291F14CFBB00DF26B5 /* NSThread+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+Ext.m"; sourceTree = "<group>"; };
 		2246F72A1F14CFBB00DF26B5 /* NSURL+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Ext.h"; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 				2246F7241F14CFBB00DF26B5 /* NSRegularExpression+Ext.h */,
 				2246F7251F14CFBB00DF26B5 /* NSRegularExpression+Ext.m */,
 				2246F7261F14CFBB00DF26B5 /* NSString+Ext.h */,
-				2246F7271F14CFBB00DF26B5 /* NSString+Ext.mm */,
+				2246F7271F14CFBB00DF26B5 /* NSString+Ext.m */,
 				2246F7281F14CFBB00DF26B5 /* NSThread+Ext.h */,
 				2246F7291F14CFBB00DF26B5 /* NSThread+Ext.m */,
 				2246F72A1F14CFBB00DF26B5 /* NSURL+Ext.h */,
@@ -530,7 +530,7 @@
 				2246F7781F14CFBB00DF26B5 /* NSObject+RAC+Ext.m in Sources */,
 				2246F7791F14CFBB00DF26B5 /* NSObject+RACPropertySubscribing+Ext.m in Sources */,
 				2246F7731F14CFBB00DF26B5 /* NSRegularExpression+Ext.m in Sources */,
-				2246F7741F14CFBB00DF26B5 /* NSString+Ext.mm in Sources */,
+				2246F7741F14CFBB00DF26B5 /* NSString+Ext.m in Sources */,
 				2246F7751F14CFBB00DF26B5 /* NSThread+Ext.m in Sources */,
 				2246F7761F14CFBB00DF26B5 /* NSURL+Ext.m in Sources */,
 				2246F77A1F14CFBB00DF26B5 /* RACCommand+Ext.m in Sources */,
