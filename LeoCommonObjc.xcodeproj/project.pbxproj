@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2206DD7C1F31D62C004D372C /* ItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2206DD7B1F31D62C004D372C /* ItemVC.m */; };
 		2206DD801F31DCC4004D372C /* LOPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2206DD7F1F31DCC4004D372C /* LOPageVC.m */; };
+		2206DD831F31E306004D372C /* LOPageTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2206DD821F31E306004D372C /* LOPageTabBar.m */; };
 		222A4A8B1F00FF5C001DDDC6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A4A8A1F00FF5C001DDDC6 /* main.m */; };
 		222A4A8E1F00FF5C001DDDC6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A4A8D1F00FF5C001DDDC6 /* AppDelegate.m */; };
 		222A4A911F00FF5C001DDDC6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222A4A901F00FF5C001DDDC6 /* ViewController.m */; };
@@ -68,6 +69,8 @@
 		2206DD7B1F31D62C004D372C /* ItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemVC.m; sourceTree = "<group>"; };
 		2206DD7E1F31DCC4004D372C /* LOPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LOPageVC.h; sourceTree = "<group>"; };
 		2206DD7F1F31DCC4004D372C /* LOPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LOPageVC.m; sourceTree = "<group>"; };
+		2206DD811F31E306004D372C /* LOPageTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LOPageTabBar.h; sourceTree = "<group>"; };
+		2206DD821F31E306004D372C /* LOPageTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LOPageTabBar.m; sourceTree = "<group>"; };
 		222A4A861F00FF5C001DDDC6 /* LeoCommonObjc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeoCommonObjc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222A4A8A1F00FF5C001DDDC6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		222A4A8C1F00FF5C001DDDC6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 		2206DD7D1F31DCB0004D372C /* uikit */ = {
 			isa = PBXGroup;
 			children = (
+				2206DD811F31E306004D372C /* LOPageTabBar.h */,
+				2206DD821F31E306004D372C /* LOPageTabBar.m */,
 				2206DD7E1F31DCC4004D372C /* LOPageVC.h */,
 				2206DD7F1F31DCC4004D372C /* LOPageVC.m */,
 			);
@@ -524,6 +529,7 @@
 				2246F76B1F14CFBB00DF26B5 /* NSDictionary+Ext.m in Sources */,
 				2246F76C1F14CFBB00DF26B5 /* NSError+common.m in Sources */,
 				2246F76D1F14CFBB00DF26B5 /* NSFileManager+Utils.m in Sources */,
+				2206DD831F31E306004D372C /* LOPageTabBar.m in Sources */,
 				2246F76E1F14CFBB00DF26B5 /* NSMutableArray+Ext.m in Sources */,
 				2246F76F1F14CFBB00DF26B5 /* NSMutableAttributedString+Ext.m in Sources */,
 				2246F7701F14CFBB00DF26B5 /* NSMutableDictionary+Ext.m in Sources */,
