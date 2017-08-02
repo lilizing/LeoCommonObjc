@@ -30,15 +30,17 @@
     vc1.name = @"OneVC";
     
     ItemVC *vc2 = [ItemVC new];
-    vc2.view.backgroundColor = UIColor.blueColor;
+    vc2.view.backgroundColor = UIColor.greenColor;
     vc2.name = @"TwoVC";
     
     ItemVC *vc3 = [ItemVC new];
-    vc3.view.backgroundColor = UIColor.greenColor;
+    vc3.view.backgroundColor = UIColor.blueColor;
     vc3.name = @"ThreeVC";
     
     self.pageVC = [[LOPageVC alloc] init];
     self.pageVC.viewControllers = @[vc1, vc2, vc3];
+    self.pageVC.selectedIndex = 1;
+    self.pageVC.bounces = YES;
     
     [self addChildViewController:self.pageVC];
     [self.view addSubview:self.pageVC.view];
@@ -48,7 +50,7 @@
     [self.pageVC didMoveToParentViewController:self];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.pageVC.selectedIndex = 1;
+        self.pageVC.selectedIndex = 0;
     });
 }
 

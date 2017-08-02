@@ -63,7 +63,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.toIndex = -1;
-    self.view.backgroundColor = UIColor.orangeColor;
     [self resetSelectedViewController];
     [self relayoutSelectedViewController:NO];
 }
