@@ -28,7 +28,6 @@
 #import <LeoCommonObjc/NSURL+Ext.h>
 #import <LeoCommonObjc/UIButton+EnlargeEdge.h>
 
-#import <LeoCommonObjc/NSObject+RAC+Ext.h>
 #import <LeoCommonObjc/NSObject+RACPropertySubscribing+Ext.h>
 #import <LeoCommonObjc/RACCommand+Ext.h>
 #import <LeoCommonObjc/RACDisposableSubscriptingAssignmentTrampoline.h>

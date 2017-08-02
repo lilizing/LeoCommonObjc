@@ -58,6 +58,13 @@ END_IMP_SINGLETON
 #define fLargerThan(a,b) (!fEqualTo(a, b) && (a) > (b))
 #define fLargerThanOrEqualTo(a,b) (fEqualTo(a, b) || (a) > (b))
 
+#if RELEASE
+#define LOLog( s, ... )
+#else
+#define LOLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#endif
+
+
 @interface NSObject(Ext)
 
 /*
