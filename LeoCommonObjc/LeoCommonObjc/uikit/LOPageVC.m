@@ -10,7 +10,6 @@
 #import <Masonry/Masonry.h>
 #import "NSObject+Ext.h"
 
-
 @interface LOPageVC () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -90,15 +89,21 @@
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
+    for (UIViewController *vc in _viewControllers) {
+        [vc willMoveToParentViewController:nil];
+        [vc.view removeFromSuperview];
+        [vc removeFromParentViewController];
+    }
     _viewControllers = viewControllers;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * self.viewControllers.count, self.scrollView.bounds.size.height);
+    _selectedIndex = 0;
+    [self resetSelectedViewController];
+    [self relayoutSelectedViewController:NO];
 }
 
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.pagingEnabled = YES;
-        _scrollView.bounces = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.delegate = self;
@@ -111,12 +116,12 @@
 }
 
 -(void)setSelectedIndex:(NSInteger)selectedIndex {
-    if (selectedIndex < 0 || selectedIndex > self.viewControllers.count - 1) {
+    if (_selectedIndex == selectedIndex || selectedIndex < 0 || selectedIndex > self.viewControllers.count - 1) {
         return;
     }
     _selectedIndex = selectedIndex;
     [self resetSelectedViewController];
-    [self relayoutSelectedViewController:YES];
+    [self relayoutSelectedViewController:NO];
 }
 
 - (BOOL)bounces {

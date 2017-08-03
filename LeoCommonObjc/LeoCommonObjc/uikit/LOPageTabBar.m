@@ -16,6 +16,10 @@
 #import "NSAttributedString+Ext.h"
 #import "RACDisposableSubscriptingAssignmentTrampoline.h"
 
+@implementation LOPageTabModel
+
+@end
+
 @interface LOPageTab ()
 
 @property (nonatomic, strong) UIButton *button;
@@ -25,13 +29,14 @@
 @implementation LOPageTab
 
 - (instancetype)initWithFrame:(CGRect)frame
-                        Title:(NSAttributedString *)title
+                        title:(NSAttributedString *)title
                 selectedTitle:(NSAttributedString *)selectedTitle
                       padding:(CGFloat)padding {
     self = [super initWithFrame:frame];
     if (self) {
-        self.title = title;
-        self.selectedTitle = selectedTitle;
+        _model = [LOPageTabModel new];
+        self.model.title = title;
+        self.model.selectedTitle = selectedTitle;
         self.padding = padding;
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -40,11 +45,17 @@
         [self.button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        [self.button setAttributedTitle:self.title forState:UIControlStateNormal];
-        [self.button setAttributedTitle:self.selectedTitle forState:UIControlStateSelected];
+        [self.button setAttributedTitle:self.model.title forState:UIControlStateNormal];
+        [self.button setAttributedTitle:self.model.selectedTitle forState:UIControlStateSelected];
         
     }
     return self;
+}
+
+- (instancetype)initWithTitle:(NSAttributedString *)title
+                selectedTitle:(NSAttributedString *)selectedTitle
+                      padding:(CGFloat)padding {
+    return [self initWithFrame:CGRectZero title:title selectedTitle:selectedTitle padding:padding];
 }
 
 - (BOOL)isSelected {
@@ -55,10 +66,18 @@
     [self.button setSelected:selected];
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
-    CGSize size1 = [NSAttributedString getExactSizeOfAttributedStr:self.title withConstraints:CGSizeMake(CGFLOAT_MAX, self.height) limitedToNumberOfLines:1];
-    CGSize size2 = [NSAttributedString getExactSizeOfAttributedStr:self.selectedTitle withConstraints:CGSizeMake(CGFLOAT_MAX, self.height) limitedToNumberOfLines:1];
-    return CGSizeMake(MAX(size1.width, size2.width) + self.padding * 2, self.height);
+- (CGSize)size {
+    UILabel *label = [UILabel new];
+    label.attributedText = self.model.title;
+    label.numberOfLines = 1;
+    CGSize size1 = [label sizeThatFits:CGSizeMake(CGFLOAT_MAX, self.height)];
+
+    label.attributedText = self.model.selectedTitle;
+    CGSize size2 = [label sizeThatFits:CGSizeMake(CGFLOAT_MAX, self.height)];
+    //以下计算方式不准确，总差那么几个像素
+    //    CGSize size1 = [NSAttributedString getExactSizeOfAttributedStr:self.model.title withConstraints:CGSizeMake(CGFLOAT_MAX, self.height) limitedToNumberOfLines:1];
+    //    CGSize size2 = [NSAttributedString getExactSizeOfAttributedStr:self.model.selectedTitle withConstraints:CGSizeMake(CGFLOAT_MAX, self.height) limitedToNumberOfLines:1];
+    return CGSizeMake(MAX(size1.width, size2.width) + self.padding * 2, MAX(self.height, MAX(size1.height, size2.height)));
 }
 
 @end
@@ -78,18 +97,31 @@
                    lineHeight:(CGFloat)lineHeight
                    lineMargin:(CGFloat)lineMargin
                     lineColor:(UIColor *)lineColor {
-    self = [super initWithFrame:frame];
+    self = [self initWithFrame:frame];
     if (self) {
         _tabs = tabs;
         _lineHeight = lineHeight;
         _lineColor = lineColor;
         _lineMargin = lineMargin;
-        
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
         [self initSubviews];
-        [self relayout];
+        [self resetSelected];
         [self rebinding];
     }
     return self;
+}
+
+- (instancetype)initWithTabs:(NSArray<LOPageTab *> *)tabs
+                   lineHeight:(CGFloat)lineHeight
+                   lineMargin:(CGFloat)lineMargin
+                    lineColor:(UIColor *)lineColor {
+    return [self initWithFrame:CGRectZero tabs:tabs lineHeight:lineHeight lineMargin:lineMargin lineColor:lineColor];
 }
 
 - (void)initSubviews {
@@ -101,20 +133,7 @@
     [self addSubview:_scrollView];
     
     _lineView = [[UIView alloc] init];
-    _lineView.backgroundColor = _lineColor;
     [self.scrollView addSubview:_lineView];
-}
-
-- (void)rebinding {
-    @weakify(self)
-    RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
-    [self.tabs enumerateObjectsUsingBlock:^(LOPageTab * _Nonnull tab, NSUInteger idx, BOOL * _Nonnull stop) {
-        [disposable addDisposable:[tab.rac_signalForTap subscribeNext:^(id x) {
-            @strongify(self)
-            self.selectedIndex = idx;
-        }]];
-    }];
-    RACDisposable(self, selecteTabDisposable) = disposable;
 }
 
 - (void)setTabs:(NSArray<LOPageTab *> *)tabs {
@@ -122,7 +141,7 @@
         [tab removeFromSuperview];
     }
     _tabs = tabs;
-    [self relayout];
+    [self resetSelected];
     [self rebinding];
 }
 
@@ -143,26 +162,38 @@
         }
     }];
     
-    CGFloat contentOffsetX = 0;
-    if (self.scrollView.contentSize.width > self.width) {
-        contentOffsetX = MIN(MAX(self.selectedTab.centerX - self.width / 2, 0), self.scrollView.contentSize.width - self.width);
+    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self relayoutScrollview];
+            [self relayoutLineView];
+            [self layoutIfNeeded];
+        } completion:nil];
     }
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.scrollView.contentOffset = CGPointMake(contentOffsetX, 0);
-        [self relayoutLineView];
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        
-    }];
 }
 
-- (void)relayout {
+- (void)rebinding {
+    @weakify(self)
+    RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
+    [self.tabs enumerateObjectsUsingBlock:^(LOPageTab * _Nonnull tab, NSUInteger idx, BOOL * _Nonnull stop) {
+        [disposable addDisposable:[tab.rac_signalForTap subscribeNext:^(id x) {
+            @strongify(self)
+            self.selectedIndex = idx;
+        }]];
+    }];
+    RACDisposable(self, selecteTabDisposable) = disposable;
+}
+
+- (void)resetSelected {
     _selectedIndex = 0;
     if (self.tabs.count) {
         self.selectedTab = self.tabs[self.selectedIndex];
         self.selectedTab.selected = YES;
     }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
     [self relayoutScrollview];
     [self relayoutTabsView];
     [self relayoutLineView];
@@ -170,6 +201,7 @@
 }
 
 - (void)relayoutLineView {
+    self.lineView.backgroundColor = self.lineColor;
     if (self.selectedTab) {
         [self.lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self).offset(-self.lineOffset);
@@ -190,17 +222,24 @@
     [self.scrollView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
+    
     CGFloat width = 0;
     for (LOPageTab *tab in self.tabs) {
-        width += [tab sizeThatFits:CGSizeMake(self.width, self.height)].width;
+        width += [tab size].width;
     }
     self.scrollView.contentSize = CGSizeMake(MAX(width, self.width), 0);
+    
+    CGFloat contentOffsetX = 0;
+    if (self.scrollView.contentSize.width > self.width) {
+        contentOffsetX = MIN(MAX(self.selectedTab.centerX - self.width / 2, 0), self.scrollView.contentSize.width - self.width);
+    }
+    self.scrollView.contentOffset = CGPointMake(contentOffsetX, 0);
 }
 
 - (void)relayoutTabsView {
     CGFloat width = 0;
     for (LOPageTab *tab in self.tabs) {
-        width += [tab sizeThatFits:CGSizeMake(self.width, self.height)].width;
+        width += [tab size].width;
     }
     CGFloat tabMargin = 0;
     if (width < self.width) {
@@ -211,7 +250,7 @@
             [self.scrollView addSubview:tab];
         }
         LOPageTab *preTab = idx > 0 ? _tabs[idx - 1] : nil;
-        CGSize size = [tab sizeThatFits:CGSizeMake(self.width, self.height)];
+        CGSize size = [tab size];
         [tab mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.height.equalTo(self.scrollView);
             make.width.equalTo(@(size.width));

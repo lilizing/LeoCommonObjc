@@ -8,15 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LOPageTab : UIView
+@interface LOPageTabModel : NSObject
 
 @property (nonatomic, strong) NSAttributedString *title;
 @property (nonatomic, strong) NSAttributedString *selectedTitle;
+
+@end
+
+@interface LOPageTab : UIView
+
+@property (nonatomic, strong, readonly) LOPageTabModel *model;
 @property (nonatomic, assign) CGFloat padding;
 @property (nonatomic, assign, getter=isSelected) BOOL selected;
 
 - (instancetype)initWithFrame:(CGRect)frame
-                        Title:(NSAttributedString *)title
+                        title:(NSAttributedString *)title
+                selectedTitle:(NSAttributedString *)selectedTitle
+                      padding:(CGFloat)padding;
+
+- (instancetype)initWithTitle:(NSAttributedString *)title
                 selectedTitle:(NSAttributedString *)selectedTitle
                       padding:(CGFloat)padding;
 
@@ -39,5 +49,10 @@
                    lineHeight:(CGFloat)lineHeight
                    lineMargin:(CGFloat)lineMargin
                     lineColor:(UIColor *)lineColor;
+
+- (instancetype)initWithTabs:(NSArray<LOPageTab *> *)tabs
+                  lineHeight:(CGFloat)lineHeight
+                  lineMargin:(CGFloat)lineMargin
+                   lineColor:(UIColor *)lineColor;
 
 @end
