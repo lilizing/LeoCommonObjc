@@ -243,7 +243,7 @@
     }
     CGFloat tabMargin = 0;
     if (width < self.width) {
-        tabMargin = (self.width - width) / MAX(1, self.tabs.count + 1);
+        tabMargin = (self.width - width) / MAX(1, self.tabs.count * 2);
     }
     [self.tabs enumerateObjectsUsingBlock:^(LOPageTab * _Nonnull tab, NSUInteger idx, BOOL * _Nonnull stop) {
         if (!tab.superview) {
@@ -254,7 +254,7 @@
         [tab mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.height.equalTo(self.scrollView);
             make.width.equalTo(@(size.width));
-            make.left.equalTo(preTab ? preTab.mas_right : @(0)).offset(tabMargin);
+            make.left.equalTo(preTab ? preTab.mas_right : @(0)).offset(preTab ? tabMargin * 2 : tabMargin);
         }];
     }];
 }
