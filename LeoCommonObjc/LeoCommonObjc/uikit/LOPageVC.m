@@ -132,6 +132,14 @@
     self.scrollView.bounces = bounces;
 }
 
+- (BOOL)scrollEnabled {
+    return self.scrollView.scrollEnabled;
+}
+
+- (void)setScrollEnabled:(BOOL)scrollEnabled {
+    self.scrollView.scrollEnabled = scrollEnabled;
+}
+
 - (void)startMoving:(NSInteger)index {
     self.moving = YES;
     

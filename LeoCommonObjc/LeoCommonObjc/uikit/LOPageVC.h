@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSArray<UIViewController *> *viewControllers;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign) BOOL bounces;
+@property (nonatomic, assign) BOOL scrollEnabled;
 
 @end

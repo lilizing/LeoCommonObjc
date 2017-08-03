@@ -64,6 +64,14 @@
     return self.pageViewController.bounces;
 }
 
+- (BOOL)scrollEnabled {
+    return self.pageViewController.scrollEnabled;
+}
+
+- (void)setScrollEnabled:(BOOL)scrollEnabled {
+    self.pageViewController.scrollEnabled = scrollEnabled;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
