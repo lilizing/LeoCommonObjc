@@ -142,6 +142,7 @@
             make.bottom.equalTo(self.scrollView.mas_bottom);
             make.left.equalTo(self.scrollView.mas_left).offset(index * self.scrollView.bounds.size.width);
             make.width.equalTo(self.scrollView.mas_width);
+            make.height.equalTo(self.scrollView.mas_height);
         }];
         
         [toViewController didMoveToParentViewController:self];

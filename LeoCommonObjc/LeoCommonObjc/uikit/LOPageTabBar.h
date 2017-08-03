@@ -15,6 +15,11 @@
 @property (nonatomic, assign) CGFloat padding;
 @property (nonatomic, assign, getter=isSelected) BOOL selected;
 
+- (instancetype)initWithFrame:(CGRect)frame
+                        Title:(NSAttributedString *)title
+                selectedTitle:(NSAttributedString *)selectedTitle
+                      padding:(CGFloat)padding;
+
 @end
 
 @interface LOPageTabBar : UIView
@@ -28,5 +33,11 @@
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign) BOOL bounces;
+
+- (instancetype)initWithFrame:(CGRect)frame
+                         tabs:(NSArray<LOPageTab *> *)tabs
+                   lineHeight:(CGFloat)lineHeight
+                   lineMargin:(CGFloat)lineMargin
+                    lineColor:(UIColor *)lineColor;
 
 @end
