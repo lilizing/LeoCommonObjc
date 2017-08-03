@@ -41,6 +41,9 @@
 @property (nonatomic, assign) CGFloat lineMargin;
 @property (nonatomic, assign) CGFloat lineOffset;
 
+@property (nonatomic, assign) CGFloat seperatorLineHeight;
+@property (nonatomic, strong) UIColor *seperatorLineColor;
+
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign) BOOL bounces;
 

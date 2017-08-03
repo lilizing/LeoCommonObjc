@@ -87,6 +87,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) LOPageTab *selectedTab;
 @property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UIView *seperatorView;
 
 @end
 
@@ -134,6 +135,9 @@
     
     _lineView = [[UIView alloc] init];
     [self.scrollView addSubview:_lineView];
+    
+    _seperatorView = [[UIView alloc] init];
+    [self addSubview:_seperatorView];
 }
 
 - (void)setTabs:(NSArray<LOPageTab *> *)tabs {
@@ -202,20 +206,25 @@
 
 - (void)relayoutLineView {
     self.lineView.backgroundColor = self.lineColor;
+    self.seperatorView.backgroundColor = self.seperatorLineColor;
     if (self.selectedTab) {
         [self.lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self).offset(-self.lineOffset);
+            make.bottom.equalTo(self).offset(-self.lineOffset-self.seperatorLineHeight);
             make.left.equalTo(self.selectedTab).offset(self.lineMargin + self.selectedTab.padding);
             make.right.equalTo(self.selectedTab).offset(-(self.lineMargin + self.selectedTab.padding));
             make.height.equalTo(@(self.lineHeight));
         }];
     } else {
         [self.lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self).offset(-self.lineOffset);
+            make.bottom.equalTo(self).offset(-self.lineOffset-self.seperatorLineHeight);
             make.height.equalTo(@(self.lineHeight));
             make.width.equalTo(@0);
         }];
     }
+    [self.seperatorView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self);
+        make.height.equalTo(@(self.seperatorLineHeight));
+    }];
 }
 
 - (void)relayoutScrollview {

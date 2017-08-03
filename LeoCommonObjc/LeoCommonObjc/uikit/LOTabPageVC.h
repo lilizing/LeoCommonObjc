@@ -17,6 +17,7 @@
 
 @property (nonatomic, assign) CGFloat tabHeight;
 @property (nonatomic, assign) CGFloat tabPadding;
+
 @property (nonatomic, strong) NSMutableArray<LOPageTabModel *> *tabModels;
 
 @property (nonatomic, strong) NSArray<UIViewController *> *viewControllers;
