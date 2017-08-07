@@ -136,5 +136,7 @@ Pod::Spec.new do |s|
   # s.dependency "BLNetworking"
   # s.dependency "BLAPIManagers"
   # s.dependency "BLMediator"
+  s.dependency "ReactiveCocoa", '2.4.7'
+  s.dependency "Masonry", '1.0.2'
 
 end
