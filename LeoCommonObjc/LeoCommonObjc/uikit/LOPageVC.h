@@ -15,4 +15,8 @@
 @property (nonatomic, assign) BOOL bounces;
 @property (nonatomic, assign) BOOL scrollEnabled;
 
+- (void)insertViewController:(UIViewController *)viewController atIndex:(NSInteger)index;
+
+- (void)removeViewControllerAtIndex:(NSInteger)index;
+
 @end

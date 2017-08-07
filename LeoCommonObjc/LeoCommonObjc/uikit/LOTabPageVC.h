@@ -26,4 +26,10 @@
 
 @property (nonatomic, assign) BOOL scrollEnabled;
 
+- (void)insertWithViewController:(UIViewController *)viewController
+                        tabModel:(LOPageTabModel *)tabModel
+                         atIndex:(NSInteger)index;
+
+-(void)removeAtIndex:(NSInteger)index;
+
 @end

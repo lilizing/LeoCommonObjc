@@ -71,8 +71,8 @@
                                                          color:[UIColor lightGrayColor]
                                                           font:[UIFont systemFontOfSize:15]];
         NSAttributedString *selectedTitle = [NSAttributedString string:name
-                                                         color:[UIColor darkGrayColor]
-                                                          font:[UIFont systemFontOfSize:15]];
+                                                                 color:[UIColor darkGrayColor]
+                                                                  font:[UIFont systemFontOfSize:15]];
         LOPageTabModel *model = [LOPageTabModel new];
         model.title = title;
         model.selectedTitle = selectedTitle;
@@ -113,15 +113,18 @@
             NSAttributedString *selectedTitle = [NSAttributedString string:@"测试我的关注"
                                                                      color:[UIColor darkGrayColor]
                                                                       font:[UIFont systemFontOfSize:15]];
-            //        LOPageTabModel *model = [LOPageTabModel new];
-            //        model.title = title;
-            //        model.selectedTitle = selectedTitle;
+            LOPageTabModel *model = [LOPageTabModel new];
+            model.title = title;
+            model.selectedTitle = selectedTitle;
             
-            LOPageTab *tab = [[LOPageTab alloc] initWithTitle:title selectedTitle:selectedTitle padding:10];
             
-            [self.tabPageVC.pageTabBar insertTab:tab atIndex:1];
+            ItemVC *vc = [ItemVC new];
+            vc.view.backgroundColor = UIColor.brownColor;
+            vc.name = @"DemoVC";
+            
+            [self.tabPageVC insertWithViewController:vc tabModel:model atIndex:1];
         } else {
-            [self.tabPageVC.pageTabBar removeTabAtIndex:1];
+            [self.tabPageVC removeAtIndex:1];
         }
     };
 }

@@ -13,6 +13,7 @@
 #import "NSObject+RAC+Ext.h"
 #import "RACDisposableSubscriptingAssignmentTrampoline.h"
 #import "RACSignal+Ext.h"
+#import "NSObject+RACPropertySubscribing+Ext.h"
 
 @interface LOTabPageVC ()
 
@@ -91,18 +92,30 @@
         make.top.equalTo(self.pageTabBar.mas_bottom);
     }];
     [self.pageViewController didMoveToParentViewController:self];
-    
-    [self binding];
+    [self rebinding];
 }
 
-- (void)binding {
+- (void)insertWithViewController:(UIViewController *)viewController tabModel:(LOPageTabModel *)tabModel atIndex:(NSInteger)index {
+    LOPageTab *tab = [[LOPageTab alloc] initWithTitle:tabModel.title selectedTitle:tabModel.selectedTitle padding:self.tabPadding];
+    [self.pageTabBar insertTab:tab atIndex:index];
+    [self.pageViewController insertViewController:viewController atIndex:index];
+    [self rebinding];
+}
+
+-(void)removeAtIndex:(NSInteger)index {
+    [self.pageTabBar removeTabAtIndex:index];
+    [self.pageViewController removeViewControllerAtIndex:index];
+    [self rebinding];
+}
+
+- (void)rebinding {
     @weakify(self)
-    [[RACObserve(self.pageTabBar, selectedIndex) distinctUntilChanged] subscribeNext:^(NSNumber *selectedIndex) {
+    [[RACObserveOnce(self.pageTabBar, selectedIndex) distinctUntilChanged] subscribeNext:^(NSNumber *selectedIndex) {
         @strongify(self)
         self.pageViewController.selectedIndex = selectedIndex.integerValue;
     }];
     
-    [[RACObserve(self.pageViewController, selectedIndex) distinctUntilChanged] subscribeNext:^(NSNumber *selectedIndex) {
+    [[RACObserveOnce(self.pageViewController, selectedIndex) distinctUntilChanged] subscribeNext:^(NSNumber *selectedIndex) {
         @strongify(self)
         self.pageTabBar.selectedIndex = selectedIndex.integerValue;
     }];

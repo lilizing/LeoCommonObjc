@@ -24,18 +24,20 @@
 
 @implementation LOPageVC
 
-- (void)relayoutSelectedViewController:(BOOL)animated {
-    if (self.selectedViewController) {
-        [self.selectedViewController.view mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.scrollView.mas_top);
-            make.bottom.equalTo(self.scrollView.mas_bottom);
-            make.left.equalTo(self.scrollView.mas_left).offset(self.selectedIndex * self.scrollView.bounds.size.width);
-            make.width.equalTo(self.scrollView.mas_width);
-            make.height.equalTo(self.scrollView.mas_height);
-        }];
-        self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * self.viewControllers.count, self.scrollView.bounds.size.height);
-        [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width * self.selectedIndex, 0) animated:animated];
-    }
+- (void)relayoutViewControllers:(BOOL)animated {
+    [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.view.superview) {
+            [obj.view mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.scrollView.mas_top);
+                make.bottom.equalTo(self.scrollView.mas_bottom);
+                make.left.equalTo(self.scrollView.mas_left).offset(idx * self.scrollView.bounds.size.width);
+                make.width.equalTo(self.scrollView.mas_width);
+                make.height.equalTo(self.scrollView.mas_height);
+            }];
+        }
+    }];
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * self.viewControllers.count, self.scrollView.bounds.size.height);
+    [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width * self.selectedIndex, 0) animated:animated];
 }
 
 - (void)resetSelectedViewController {
@@ -63,18 +65,18 @@
     [super viewDidLoad];
     self.toIndex = -1;
     [self resetSelectedViewController];
-    [self relayoutSelectedViewController:NO];
+    [self relayoutViewControllers:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self relayoutSelectedViewController:NO];
+    [self relayoutViewControllers:NO];
     [self.selectedViewController beginAppearanceTransition:YES animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self relayoutSelectedViewController:NO];
+    [self relayoutViewControllers:NO];
     [self.selectedViewController endAppearanceTransition];
 }
 
@@ -97,11 +99,43 @@
     _viewControllers = viewControllers;
     _selectedIndex = 0;
     [self resetSelectedViewController];
-    [self relayoutSelectedViewController:NO];
+    [self relayoutViewControllers:NO];
 }
 
 - (void)insertViewController:(UIViewController *)viewController atIndex:(NSInteger)index {
+    if (index == NSNotFound || index < 0 || index > self.viewControllers.count - 1) {
+        return;
+    }
+    NSMutableArray *array = [NSMutableArray arrayWithArray:self.viewControllers];
+    [array insertObject:viewController atIndex:index];
+    _viewControllers = array;
     
+    if (index <= _selectedIndex) {
+        _selectedIndex += 1;
+    }
+
+    [self relayoutViewControllers:NO];
+}
+
+- (void)removeViewControllerAtIndex:(NSInteger)index {
+    if (index == NSNotFound || index < 0 || index > self.viewControllers.count - 1) {
+        return;
+    }
+    
+    UIViewController *vc = self.viewControllers[index];
+    [vc willMoveToParentViewController:nil];
+    [vc.view removeFromSuperview];
+    [vc removeFromParentViewController];
+    
+    NSMutableArray *array = [NSMutableArray arrayWithArray:self.viewControllers];
+    [array removeObjectAtIndex:index];
+    _viewControllers = array;
+    
+    if (index <= _selectedIndex) {
+        _selectedIndex -= 1;
+        [self resetSelectedViewController];
+    }
+    [self relayoutViewControllers:NO];
 }
 
 - (UIScrollView *)scrollView {
@@ -125,7 +159,7 @@
     }
     _selectedIndex = selectedIndex;
     [self resetSelectedViewController];
-    [self relayoutSelectedViewController:NO];
+    [self relayoutViewControllers:NO];
 }
 
 - (BOOL)bounces {
