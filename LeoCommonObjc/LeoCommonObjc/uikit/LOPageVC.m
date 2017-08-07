@@ -100,6 +100,10 @@
     [self relayoutSelectedViewController:NO];
 }
 
+- (void)insertViewController:(UIViewController *)viewController atIndex:(NSInteger)index {
+    
+}
+
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] init];

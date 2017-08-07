@@ -94,7 +94,7 @@
 @implementation LOPageTabBar
 
 - (instancetype)initWithFrame:(CGRect)frame
-                         tabs:(NSArray<LOPageTab *> *)tabs
+                         tabs:(NSMutableArray<LOPageTab *> *)tabs
                    lineHeight:(CGFloat)lineHeight
                    lineMargin:(CGFloat)lineMargin
                     lineColor:(UIColor *)lineColor {
@@ -140,13 +140,86 @@
     [self addSubview:_seperatorView];
 }
 
-- (void)setTabs:(NSArray<LOPageTab *> *)tabs {
+- (void)setTabs:(NSMutableArray<LOPageTab *> *)tabs {
     for (LOPageTab *tab in _tabs) {
         [tab removeFromSuperview];
     }
     _tabs = tabs;
+    
+    _selectedIndex = 0;
+    
     [self resetSelected];
+    
     [self rebinding];
+    
+    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+        [self layoutIfNeeded];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self relayoutScrollview];
+            [self relayoutTabsView];
+            [self relayoutLineView];
+            [self layoutIfNeeded];
+        } completion:nil];
+    }
+}
+
+- (void)insertTab:(LOPageTab *)tab atIndex:(NSInteger)index {
+    if (index < 0 || index > self.tabs.count - 1) {
+        return;
+    }
+    NSMutableArray *array = [NSMutableArray arrayWithArray:self.tabs];
+    [array insertObject:tab atIndex:index];
+    _tabs = array;
+    
+    if (index <= _selectedIndex) {
+        _selectedIndex += 1;
+    }
+    [self resetSelected];
+    
+    [self rebinding];
+    
+    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+        [self layoutIfNeeded];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self relayoutScrollview];
+            [self relayoutTabsView];
+            [self relayoutLineView];
+            [self layoutIfNeeded];
+        } completion:^(BOOL finished) {
+        }];
+    }
+}
+
+- (void)removeTabAtIndex:(NSInteger)index {
+    if (index < 0 || index > self.tabs.count - 1) {
+        return;
+    }
+    
+    LOPageTab *tab = self.tabs[index];
+    tab.hidden = YES;
+    
+    NSMutableArray *array = [NSMutableArray arrayWithArray:self.tabs];
+    [array removeObjectAtIndex:index];
+    _tabs = array;
+    
+    if (index <= _selectedIndex) {
+        _selectedIndex -= 1;
+    }
+    [self resetSelected];
+    
+    [self rebinding];
+    
+    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+        [self layoutIfNeeded];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self relayoutScrollview];
+            [self relayoutTabsView];
+            [self relayoutLineView];
+            [self layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            [tab removeFromSuperview];
+        }];
+    }
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
@@ -158,20 +231,17 @@
     }
     _selectedIndex = selectedIndex;
     
-    [self.tabs enumerateObjectsUsingBlock:^(LOPageTab * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.selected = idx == selectedIndex;
-        if (obj.selected) {
-            self.selectedTab = obj;
-            self.selectedTab.selected = YES;
-        }
-    }];
+    [self resetSelected];
     
     if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+        [self layoutIfNeeded];
         [UIView animateWithDuration:0.3 animations:^{
             [self relayoutScrollview];
             [self relayoutLineView];
             [self layoutIfNeeded];
-        } completion:nil];
+        } completion:^(BOOL finished) {
+            
+        }];
     }
 }
 
@@ -188,11 +258,13 @@
 }
 
 - (void)resetSelected {
-    _selectedIndex = 0;
-    if (self.tabs.count) {
-        self.selectedTab = self.tabs[self.selectedIndex];
-        self.selectedTab.selected = YES;
-    }
+    [self.tabs enumerateObjectsUsingBlock:^(LOPageTab * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.selected = idx == _selectedIndex;
+        if (obj.selected) {
+            self.selectedTab = obj;
+            self.selectedTab.selected = YES;
+        }
+    }];
 }
 
 - (void)layoutSubviews {

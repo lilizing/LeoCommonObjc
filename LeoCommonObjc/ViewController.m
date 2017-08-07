@@ -89,10 +89,41 @@
     [self addChildViewController:self.tabPageVC];
     [self.view addSubview:self.tabPageVC.view];
     [self.tabPageVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.right.equalTo(self.view);
+        make.left.right.equalTo(self.view);
         make.top.equalTo(self.view).offset(20);
+        make.bottom.equalTo(self.view).offset(-100);
     }];
     [self.tabPageVC didMoveToParentViewController:self];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:button];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.height.equalTo(@80);
+    }];
+    [button setTitle:@"测试" forState:UIControlStateNormal];
+    [button setBackgroundColor:[UIColor orangeColor]];
+    
+    static int i = 0;
+    button.rac_actionBlock = ^(UIButton *sender) {
+        if (i++ % 2 == 0) {
+            NSAttributedString *title = [NSAttributedString string:@"测试我的关注"
+                                                             color:[UIColor lightGrayColor]
+                                                              font:[UIFont systemFontOfSize:15]];
+            NSAttributedString *selectedTitle = [NSAttributedString string:@"测试我的关注"
+                                                                     color:[UIColor darkGrayColor]
+                                                                      font:[UIFont systemFontOfSize:15]];
+            //        LOPageTabModel *model = [LOPageTabModel new];
+            //        model.title = title;
+            //        model.selectedTitle = selectedTitle;
+            
+            LOPageTab *tab = [[LOPageTab alloc] initWithTitle:title selectedTitle:selectedTitle padding:10];
+            
+            [self.tabPageVC.pageTabBar insertTab:tab atIndex:1];
+        } else {
+            [self.tabPageVC.pageTabBar removeTabAtIndex:1];
+        }
+    };
 }
 
 - (void)testPageVC {
