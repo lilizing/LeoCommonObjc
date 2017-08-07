@@ -91,13 +91,17 @@
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
+    [self setViewControllers:viewControllers selectedIndex:0];
+}
+
+- (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers selectedIndex:(NSInteger)selectedIndex {
     for (UIViewController *vc in _viewControllers) {
         [vc willMoveToParentViewController:nil];
         [vc.view removeFromSuperview];
         [vc removeFromParentViewController];
     }
     _viewControllers = viewControllers;
-    _selectedIndex = 0;
+    _selectedIndex = selectedIndex;
     [self resetSelectedViewController];
     [self relayoutViewControllers:NO];
 }

@@ -58,6 +58,8 @@
                   lineMargin:(CGFloat)lineMargin
                    lineColor:(UIColor *)lineColor;
 
+- (void)setTabs:(NSMutableArray<LOPageTab *> *)tabs selectedIndex:(NSInteger)selectedIndex;
+
 - (void)insertTab:(LOPageTab *)tab atIndex:(NSInteger)atIndex;
 
 - (void)removeTabAtIndex:(NSInteger)index;

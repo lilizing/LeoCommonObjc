@@ -30,12 +30,27 @@
     return self;
 }
 
+- (void)setTabModels:(NSMutableArray<LOPageTabModel *> *)tabModels
+     ViewControllers:(NSArray<UIViewController *> *)viewControllers
+       selectedIndex:(NSInteger)selectedIndex {
+    _tabModels = tabModels;
+    NSMutableArray *tabs = [NSMutableArray array];
+    [_tabModels enumerateObjectsUsingBlock:^(LOPageTabModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        LOPageTab *tab = [[LOPageTab alloc] initWithTitle:obj.title selectedTitle:obj.selectedTitle padding:self.tabPadding];
+        [tabs addObject:tab];
+    }];
+    [self.pageTabBar setTabs:tabs selectedIndex:selectedIndex];
+    [self.pageViewController setViewControllers:viewControllers selectedIndex:selectedIndex];
+    [self rebinding];
+}
+
 - (NSArray<UIViewController *> *)viewControllers {
     return self.pageViewController.viewControllers;
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
     self.pageViewController.viewControllers = viewControllers;
+    [self rebinding];
 }
 
 - (void)setTabModels:(NSMutableArray<LOPageTabModel *> *)tabModels {
@@ -46,6 +61,7 @@
         [tabs addObject:tab];
     }];
     self.pageTabBar.tabs = tabs;
+    [self rebinding];
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {

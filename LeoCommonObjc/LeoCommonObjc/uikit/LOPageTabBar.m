@@ -140,27 +140,33 @@
     [self addSubview:_seperatorView];
 }
 
+- (BOOL)bounces {
+    return self.scrollView.bounces;
+}
+
+-(void)setBounces:(BOOL)bounces {
+    self.scrollView.bounces = bounces;
+}
+
 - (void)setTabs:(NSMutableArray<LOPageTab *> *)tabs {
+    [self setTabs:tabs selectedIndex:0];
+}
+
+- (void)setTabs:(NSMutableArray<LOPageTab *> *)tabs selectedIndex:(NSInteger)selectedIndex {
     for (LOPageTab *tab in _tabs) {
         [tab removeFromSuperview];
     }
     _tabs = tabs;
     
-    _selectedIndex = 0;
+    _selectedIndex = selectedIndex;
     
     [self resetSelected];
     
     [self rebinding];
     
-    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
-        [self layoutIfNeeded];
-        [UIView animateWithDuration:0.3 animations:^{
-            [self relayoutScrollview];
-            [self relayoutTabsView];
-            [self relayoutLineView];
-            [self layoutIfNeeded];
-        } completion:nil];
-    }
+    [self relayoutScrollview];
+    [self relayoutTabsView];
+    [self relayoutLineView];
 }
 
 - (void)insertTab:(LOPageTab *)tab atIndex:(NSInteger)index {
