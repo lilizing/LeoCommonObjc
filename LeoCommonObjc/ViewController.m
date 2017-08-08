@@ -32,7 +32,8 @@
     [super viewDidLoad];
     
     
-    [self testTabPageVC];
+//    [self testTabPageVC];
+    [self testPageTabBar];
     
     //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     //        self.pageVC.viewControllers = @[vc3, vc2, vc1];
@@ -211,7 +212,7 @@
         make.height.equalTo(@44);
         make.top.equalTo(@20);
     }];
-    self.tabBar.selectedIndex = 6;
+//    self.tabBar.selectedIndex = 6;
 }
 
 @end

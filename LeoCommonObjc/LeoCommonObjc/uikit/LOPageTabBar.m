@@ -98,19 +98,13 @@
                    lineHeight:(CGFloat)lineHeight
                    lineMargin:(CGFloat)lineMargin
                     lineColor:(UIColor *)lineColor {
-    self = [self initWithFrame:frame];
+    self = [super initWithFrame:frame];
     if (self) {
         _tabs = tabs;
         _lineHeight = lineHeight;
         _lineColor = lineColor;
         _lineMargin = lineMargin;
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
+        
         [self initSubviews];
         [self resetSelected];
         [self rebinding];
