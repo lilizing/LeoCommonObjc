@@ -112,6 +112,16 @@
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initSubviews];
+        [self resetSelected];
+        [self rebinding];
+    }
+    return self;
+}
+
 - (instancetype)initWithTabs:(NSArray<LOPageTab *> *)tabs
                    lineHeight:(CGFloat)lineHeight
                    lineMargin:(CGFloat)lineMargin
