@@ -37,7 +37,10 @@
         }
     }];
     self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * self.viewControllers.count, self.scrollView.bounds.size.height);
-    [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width * self.selectedIndex, 0) animated:animated];
+    //fuck,这里纯粹是为了解决iOS8的系统bug，做个0秒延时
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:CGPointMake(self.view.bounds.size.width * self.selectedIndex, 0) animated:animated];
+    });
 }
 
 - (void)resetSelectedViewController {
