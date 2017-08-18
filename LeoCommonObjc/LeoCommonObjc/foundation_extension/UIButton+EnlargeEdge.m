@@ -41,24 +41,23 @@ static char leftNameKey;
     }
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+//- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    CGRect rect = [self enlargedRect];
+//    if (CGRectEqualToRect(rect, self.bounds))
+//    {
+//        return [super pointInside:point withEvent:event];
+//    }
+//    return CGRectContainsPoint(rect, point) ? YES : NO;
+//}
+
+- (UIView*)hitTest:(CGPoint) point withEvent:(UIEvent*) event
 {
     CGRect rect = [self enlargedRect];
     if (CGRectEqualToRect(rect, self.bounds))
     {
-        return [super pointInside:point withEvent:event];
+        return [super hitTest:point withEvent:event];
     }
-    return CGRectContainsPoint(rect, point) ? YES : NO;
+    return CGRectContainsPoint(rect, point) ? self : nil;
 }
-
-/*
- - (UIView*)hitTest:(CGPoint) point withEvent:(UIEvent*) event
- {
- CGRect rect = [self enlargedRect];
- if (CGRectEqualToRect(rect, self.bounds))
- {
- return [super hitTest:point withEvent:event];
- }
- return CGRectContainsPoint(rect, point) ? self : nil;
- }*/
 @end
